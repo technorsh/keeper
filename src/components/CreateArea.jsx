@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Add, Check } from '@material-ui/icons';
-import { Fab, Zoom} from '@material-ui/core';
+import { Fab, Zoom, Grid } from '@material-ui/core';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import Progress from "./Progress";
 
 function CreateArea(props) {
@@ -36,22 +37,24 @@ function CreateArea(props) {
   }
 
   return (
-    <div>
-      <form className="create-note">
-        {
-          isExpanded && (<input name="title" placeholder="Title" value={note.title} onChange={handleChange} /> )
-        }
-        <textarea name="content" placeholder="Take a note..." rows={isExpanded ? 3 : 1} value={note.content} onChange={handleChange}
-        onClick={expand} />
-        <Zoom in={isExpanded}>
-          <Fab onClick={submitNote}>
-            { props.type !== "EDIT" ?<Add />:<Check /> }
-          </Fab>
-        </Zoom>
-      </form>
-      <Progress open={props.open} close={props.closeProgress}/>
-    </div>
+    <Grid container>
+      <Grid items xs={12} style={{ padding:isWidthUp("sm",props.width)?'20px':'20px'}}>
+        <form className="create-note" style={{width:isWidthUp("sm",props.width)?'480px':'100%'}}>
+          {
+            isExpanded && (<input name="title" placeholder="Title" value={note.title} onChange={handleChange} /> )
+          }
+          <textarea name="content" placeholder="Take a note..." rows={isExpanded ? 3 : 1} value={note.content} onChange={handleChange}
+          onClick={expand} />
+          <Zoom in={isExpanded}>
+            <Fab onClick={submitNote}>
+              { props.type !== "EDIT" ? <Add /> : <Check /> }
+            </Fab>
+          </Zoom>
+        </form>
+        <Progress open={props.open} close={props.closeProgress}/>
+      </Grid>
+    </Grid>
   );
 }
 
-export default CreateArea;
+export default withWidth()(CreateArea);

@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { connect } from 'react-redux';
+import { Grid } from "@material-ui/core";
 import { setUser ,setLogin , setNotes } from "./../appStore/actions";
 import { URL } from "./../common";
 
@@ -89,22 +90,30 @@ function App(props) {
   }
 
   return (
-    <div>
-      <Header fetchNotes = {fetchNotes} />
-      <CreateArea onAdd={addNote} type={"ADD"} close={()=>{}} open={isLoading} closeProgress={()=>{setLoading(false)}}/>
-      {notes.map((noteItem,index) => {
-        return(
-          <Note
-            key={index}
-            onAdd={addNote}
-            id={noteItem.id}
-            title={noteItem.title}
-            content= {noteItem.content}
-            onDelete={deleteNote}
-          />
-        )})}
-      <Footer />
-    </div>
+    <Grid container direction="column">
+      <Grid items xs={12}>
+        <Header fetchNotes = {fetchNotes} />
+      </Grid>
+      <Grid items xs={12}>
+        <CreateArea onAdd={addNote} type={"ADD"} close={()=>{}} open={isLoading} closeProgress={()=>{setLoading(false)}}/>
+      </Grid>
+      <Grid items xs={12}>
+        {notes.map((noteItem,index) => {
+          return(
+            <Note
+              key={index}
+              onAdd={addNote}
+              id={noteItem.id}
+              title={noteItem.title}
+              content= {noteItem.content}
+              onDelete={deleteNote}
+            />
+          )})}
+      </Grid>
+      <Grid items>
+        <Footer/>
+      </Grid>
+    </Grid>
   );
 }
 
