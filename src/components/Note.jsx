@@ -1,8 +1,8 @@
 import React from "react";
+import { Grid, Backdrop, Modal } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
-import Modal from '@material-ui/core/Modal';
 import CreateArea from "./CreateArea";
-import Backdrop from '@material-ui/core/Backdrop';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import { makeStyles } from '@material-ui/core/styles';
 
 function Note(props) {
@@ -23,7 +23,7 @@ function Note(props) {
   }
 
   return (
-    <div className="note">
+    <Grid className="note" style={{width:isWidthUp("sm",props.width)?"85%":"95%"}}>
       <h1>{props.title}</h1>
       <p>{props.content}</p>
       <button onClick={()=>{handleOpen()}}>
@@ -50,7 +50,7 @@ function Note(props) {
       <button onClick={handleClick}>
       <Delete />
       </button>
-    </div>
+    </Grid>
   );
 }
 
@@ -68,4 +68,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default Note;
+export default withWidth()(Note);

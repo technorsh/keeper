@@ -21,6 +21,7 @@ function CreateArea(props) {
         }
     })
   }
+  // console.log(props.width);
 
   const submitNote = (event) => {
       props.onAdd(note, props.type, props.id);
@@ -38,7 +39,7 @@ function CreateArea(props) {
 
   return (
     <Grid container>
-      <Grid items xs={12} style={{ padding:isWidthUp("sm",props.width)?'20px':'20px'}}>
+      <Grid items xs={12} style={{ padding:isWidthUp("sm",props.width)?'5px':'20px'}}>
         <form className="create-note" style={{width:isWidthUp("sm",props.width)?'480px':'100%'}}>
           {
             isExpanded && (<input name="title" placeholder="Title" value={note.title} onChange={handleChange} /> )

@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { connect } from 'react-redux';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import { Grid } from "@material-ui/core";
 import { setUser ,setLogin , setNotes } from "./../appStore/actions";
 import { URL } from "./../common";
@@ -90,7 +91,8 @@ function App(props) {
   }
 
   return (
-    <Grid container direction="column">
+    <div>
+    <Grid container direction="column" justify="center">
       <Grid items xs={12}>
         <Header fetchNotes = {fetchNotes} />
       </Grid>
@@ -98,22 +100,24 @@ function App(props) {
         <CreateArea onAdd={addNote} type={"ADD"} close={()=>{}} open={isLoading} closeProgress={()=>{setLoading(false)}}/>
       </Grid>
       <Grid items xs={12}>
-        {notes.map((noteItem,index) => {
-          return(
-            <Note
-              key={index}
-              onAdd={addNote}
-              id={noteItem.id}
-              title={noteItem.title}
-              content= {noteItem.content}
-              onDelete={deleteNote}
-            />
+        <Grid container direction="row">
+          {notes.map((noteItem,index) => {
+            return(
+              <Grid items key={index} xs={isWidthUp("sm",props.width)?'3':'12'}>
+                <Note
+                  key={index}
+                  onAdd={addNote}
+                  id={noteItem.id}
+                  title={noteItem.title}
+                  content= {noteItem.content}
+                  onDelete={deleteNote}
+                />
+              </Grid>
           )})}
-      </Grid>
-      <Grid items>
-        <Footer/>
+        </Grid>
       </Grid>
     </Grid>
+    </div>
   );
 }
 
@@ -129,4 +133,4 @@ const mapDispatchToProps = {
   setNotes
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(withWidth()(App));

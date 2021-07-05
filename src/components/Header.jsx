@@ -4,6 +4,7 @@ import { Grid, Paper, Button, Dialog } from "@material-ui/core";
 import { useSnackbar } from 'notistack';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
+import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import { setUser ,setLogin , setNotes } from "./../appStore/actions";
 import Form from './Form';
 import { URL } from "./../common";
@@ -116,4 +117,4 @@ const mapDispatchToProps = {
   setNotes
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Header);
+export default connect(mapStateToProps,mapDispatchToProps)(withWidth()(Header));
